@@ -83,7 +83,7 @@ within `sources.provider.copilot.opts` is sufficient.
       providers = {
         copilot = {
           name = "copilot",
-          module = "blink-copilot"
+          module = "blink-copilot",
           score_offset = 100,
           async = true,
           opts = {
