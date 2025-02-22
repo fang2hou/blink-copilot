@@ -112,7 +112,7 @@ Here is the default configuration for `blink-copilot`:
   max_completions = 3,
   max_attempts = 4,
   kind = "Copilot",
-  debounce = 750, ---@type integer | false
+  debounce = 200, ---@type integer | false
   auto_refresh = {
     backward = true,
     forward = true,
