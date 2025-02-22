@@ -77,7 +77,7 @@ the options within blink options `sources.provider.copilot.opts` is sufficient.
     opts = {
       max_completions = 1,  -- Global default for max completions
       max_attempts = 2,     -- Global default for max attempts
-      -- `kind` is not set, so the default value is "Copilot"
+      -- `kind_name` is not set, so the default value is "Copilot"
     }
   },
   opts = {
@@ -91,8 +91,12 @@ the options within blink options `sources.provider.copilot.opts` is sufficient.
           async = true,
           opts = {
             -- Local options override global ones
-            -- Final settings: max_completions = 3, max_attempts = 2, kind = "Copilot"
             max_completions = 3,  -- Override global max_completions
+
+            -- Final settings:
+            -- * max_completions = 3
+            -- * max_attempts = 2
+            -- * kind_name, kind_icon, debounce, auto_refresh are default
           }
         },
       },
@@ -111,7 +115,8 @@ Here is the default configuration for `blink-copilot`:
 {
   max_completions = 3,
   max_attempts = 4,
-  kind = "Copilot",
+  kind_name = "Copilot",
+  kind_icon = "",
   debounce = 200, ---@type integer | false
   auto_refresh = {
     backward = true,
