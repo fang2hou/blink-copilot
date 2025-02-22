@@ -20,7 +20,8 @@
 - [⚙️ Configuration](#️-configuration)
   - [`max_completions`](#max_completions)
   - [`max_attempts`](#max_attempts)
-  - [`kind`](#kind)
+  - [`kind_name`](#kind_name)
+  - [`kind_icon`](#kind_icon)
   - [`debounce`](#debounce)
   - [`auto_refresh`](#auto_refresh)
 - [🥘 Recipes](#-recipes)
@@ -139,19 +140,17 @@ Maximum number of attempts to fetch completions.
 
 Default: `4`
 
-### `kind`
+### `kind_name`
 
 Specifies the type of completion item to display.
 
-> [!NOTE]
->
-> If the provided `kind` does not exist, `blink-copilot` will automatically
-> register it in `CompletionItemKind`.  
-> To display a custom icon for the `kind`, you need to define the `kind_icon`
-> in the `blink.cmp` options.  
-> Refer to the recipes for examples.
-
 Default: `"Copilot"`
+
+### `kind_icon`
+
+Specifies the icon of completion item to display.
+
+Default: `""`
 
 ### `debounce`
 
@@ -219,11 +218,6 @@ Here are some example configuration for using `blink-copilot` with [lazy.nvim][l
         },
       },
     },
-    appearance = {
-      kind_icons = {
-        Copilot = "",
-      },
-    },
   },
 }
 ```
@@ -267,11 +261,6 @@ Here are some example configuration for using `blink-copilot` with [lazy.nvim][l
           score_offset = 100,
           async = true,
         },
-      },
-    },
-    appearance = {
-      kind_icons = {
-        Copilot = "",
       },
     },
   },

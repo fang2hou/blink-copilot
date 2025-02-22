@@ -1,6 +1,8 @@
 local util = require("blink-copilot.util")
 local config = require("blink-copilot.config")
 
+---@class BlinkCopilotProvider
+---@field config Config
 local M = {}
 
 ---The constructor for the completion provider
@@ -12,17 +14,8 @@ function M:new(opts)
 	local source_config = vim.tbl_deep_extend("force", config.options, opts)
 	source_config.max_attempts = source_config.max_attempts or source_config.max_completions + 1
 
-	-- Register the new kind if it doesn't exist
-	local CompletionItemKind = require("blink.cmp.types").CompletionItemKind
-	if not CompletionItemKind[source_config.kind] then
-		local kind_idx = #CompletionItemKind + 1
-		CompletionItemKind[kind_idx] = source_config.kind
-		CompletionItemKind[source_config.kind] = kind_idx
-	end
-
 	return setmetatable({
 		config = source_config,
-		kind_idx = CompletionItemKind[source_config.kind],
 	}, { __index = self })
 end
 
@@ -138,7 +131,8 @@ function M:get_completions(ctx, resolve)
 				return
 			end
 
-			local blink_items = util.lsp_completion_items_to_blink_items(lsp_items, self.kind_idx)
+			local blink_items =
+				util.lsp_completion_items_to_blink_items(lsp_items, self.config.kind_name, self.config.kind_icon)
 
 			resolve({
 				is_incomplete_forward = self.config.auto_refresh.forward,

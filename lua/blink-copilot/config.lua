@@ -3,11 +3,15 @@ local M = {}
 ---@class Config
 ---@field max_completions integer Maximum number of completions to show
 ---@field max_attempts? integer Maximum number of attempts to fetch completions
----@field kind string Specifies the type of completion item to display
+---@field kind_name string The name of the kind
+---@field kind_icon string The icon of the kind
+---@field debounce integer|false Debounce time in milliseconds
+---@field auto_refresh? {backward?: boolean, forward?: boolean} Whether to auto-refresh completions
 M.options = {
 	max_completions = 3,
-	kind = "Copilot",
-	debounce = 750, ---@type integer | false
+	kind_name = "Copilot",
+	kind_icon = "",
+	debounce = 750,
 	auto_refresh = {
 		backward = true,
 		forward = true,
