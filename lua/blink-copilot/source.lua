@@ -32,22 +32,16 @@ function M:detect_lsp_client()
 		return
 	end
 
-	local copilot_lua_clients = vim.lsp.get_clients({ name = "copilot" })
-	local copilot_vim_clients = vim.lsp.get_clients({ name = "GitHub Copilot" })
-
-	if copilot_lua_clients and copilot_lua_clients[1] then
-		self.client = copilot_lua_clients[1]
-		local ok, clt = pcall(require, "copilot.client")
-		self.is_copilot_enabled = function()
-			return ok and clt and not clt.is_disabled()
+	local lsp_clients = vim.lsp.get_clients({ bufnr = 0 })
+	for _, client in ipairs(lsp_clients) do
+		if client.server_capabilities.inlineCompletionProvider then
+			self.client = client
+			self.is_copilot_enabled = function()
+				local ok, clt = pcall(require, "copilot.client")
+				return ok and clt and not clt.is_disabled()
+			end
+			return
 		end
-
-		return
-	end
-
-	self.client = copilot_vim_clients and copilot_vim_clients[1]
-	self.is_copilot_enabled = function()
-		return vim.g.copilot_enabled ~= 0
 	end
 end
 
