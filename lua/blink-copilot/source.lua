@@ -32,15 +32,15 @@ function M:detect_lsp_client()
 		return
 	end
 
-	local lsp_clients = vim.lsp.get_clients({ bufnr = 0 })
+	local lsp_clients = vim.lsp.get_clients({ bufnr = 0, method = "textDocument/inlineCompletion" })
 	for _, client in ipairs(lsp_clients) do
-		if client.server_capabilities.inlineCompletionProvider then
+		if string.find(string.lower(client.name), "copilot") then
 			self.client = client
 			self.is_copilot_enabled = function()
-				local ok, clt = pcall(require, "copilot.client")
-				return ok and clt and not clt.is_disabled()
+				local copilot_lua, clt = pcall(require, "copilot.client")
+				return (copilot_lua and clt and not clt.is_disabled()) or (vim.g.copilot_enabled ~= 0)
 			end
-			return
+			break
 		end
 	end
 end
