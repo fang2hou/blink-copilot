@@ -156,7 +156,7 @@ function M:get_completions(ctx, resolve)
 			resolve({
 				is_incomplete_forward = self.config.auto_refresh.forward,
 				is_incomplete_backward = self.config.auto_refresh.backward,
-				items = self:add_new_completions(blink_items),
+				items = self:add_new_completions(vim.deepcopy(blink_items)),
 			})
 		end
 
