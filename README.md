@@ -60,23 +60,88 @@ Here are some example configuration for using `blink-copilot` with [lazy.nvim][l
 <details>
 <summary><code>blink-copilot</code> + <code>Copilot Language Server</code></summary>
 
-Sign in to Copilot, or use the `:LspCopilotSignIn` command from <https://github.com/neovim/nvim-lspconfig>.
+Sign in to Copilot, or use the :LspCopilotSignIn command from https://github.com/neovim/nvim-lspconfig.
+
+---
+
+**Option 1: Mason-lspconfig**
+
+<details>
+<summary>Using <code>mason-lspconfig.nvim</code> (simpler)</summary>
+
+
+
+```lua
+{
+  "williamboman/mason-lspconfig.nvim", --No manual LSP configuration needed
+  opts = {
+    ensure_installed = { "copilot" },
+  },
+  dependencies = { "williamboman/mason.nvim" },
+},
+{
+  "saghen/blink.cmp",
+  dependencies = { "fang2hou/blink-copilot" },
+  opts = {
+    sources = {
+      default = { "lsp", "path", "snippets", "buffer", "copilot" },
+      providers = {
+        copilot = {
+          name = "copilot",
+          module = "blink-copilot",
+          async = true,
+        },
+      },
+    },
+  },
+},
+```
+
+</details>
+
+---
+
+**Option 2: Mason + Custom lspconfig**
+
+<details>
+<summary>Using <code>mason.nvim</code> + <code>nvim-lspconfig</code> (more control)</summary>
+
+
 
 ```lua
 {
   "neovim/nvim-lspconfig",
   opts = {
     servers = {
-      copilot = {},
+      copilot = {}, -- manual LSP configuration
     },
   },
 },
 {
-  -- If you are using mason.nvim, you can install copilot-language-server automatically
   "mason-org/mason.nvim",
-  opts = { ensure_installed = { "copilot-language-server" } },
+  opts = { ensure_installed = { "copilot" } },
+},
+{
+  "saghen/blink.cmp",
+  dependencies = { "fang2hou/blink-copilot" },
+  opts = {
+    sources = {
+      default = { "lsp", "path", "snippets", "buffer", "copilot" },
+      providers = {
+        copilot = {
+          name = "copilot",
+          module = "blink-copilot",
+          async = true,
+        },
+      },
+    },
+  },
 },
 ```
+
+</details>
+
+---
 
 </details>
 
@@ -258,7 +323,7 @@ You can check the [official documentation][copilot-lsp-github].
 },
 {
   "mason-org/mason.nvim",
-  opts = { ensure_installed = { "copilot-language-server" } },
+  opts = { ensure_installed = { "copilot" } },
 },
 ```
 
